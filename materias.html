@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Educacional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css"
+        integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="stylemateria.css">
+    <style>
+        .box {
+            background: #f7f7f7;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ccc;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        img.preview {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex vh-100 justify-content-center align-items-center">
+        <div class="box">
+            <div class="text-center mb-3">
+                <h3>Agenda Educacional</h3>
+            </div>
+            <form id="formAgenda">
+                <div class="input-group input-group-lg mb-3">
+                    <input type="date" class="form-control" id="data" required>
+                </div>
+
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" class="form-control" id="materia" placeholder="Nome da Matéria" required>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="arquivo" required>
+                </div>
+
+                <input type="submit" class="button btn w-100" value="Adicionar">
+            </form>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Arquivos Enviados</h2>
+        <table class="table table-bordered" id="tabelaMaterias">
+            <thead class="table-light">
+                <tr>
+                    <th>Data</th>
+                    <th>Nome da Matéria</th>
+                    <th>Anexo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados inseridos dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('formAgenda');
+        const tabela = document.querySelector('#tabelaMaterias tbody');
+        let editando = null;
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const data = document.getElementById('data').value;
+            const materia = document.getElementById('materia').value;
+            const arquivoInput = document.getElementById('arquivo');
+            const arquivo = arquivoInput.files[0];
+
+            if (!data || !materia || !arquivo) {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
+            const urlArquivo = URL.createObjectURL(arquivo);
+            const isImage = arquivo.type.startsWith("image/");
+            const nomeArquivo = arquivo.name;
+
+            if (editando) {
+                const cells = editando.querySelectorAll("td");
+                cells[0].textContent = data;
+                cells[1].textContent = materia;
+                cells[2].innerHTML = isImage
+                    ? `<img src="${urlArquivo}" alt="${nomeArquivo}" class="preview">`
+                    : `<a href="${urlArquivo}" download="${nomeArquivo}">${nomeArquivo}</a>`;
+                editando = null;
+                form.reset();
+                return;
+            }
+
+            const novaLinha = document.createElement('tr');
+            novaLinha.innerHTML = `
+                <td>${data}</td>
+                <td>${materia}</td>
+                <td>${isImage
+                    ? `<img src="${urlArquivo}" alt="${nomeArquivo}" class="preview">`
+                    : `<a href="${urlArquivo}" download="${nomeArquivo}">${nomeArquivo}</a>`}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm me-1 btn-editar">Editar</button>
+                    <button class="btn btn-danger btn-sm btn-excluir">Excluir</button>
+                </td>
+            `;
+            tabela.appendChild(novaLinha);
+            form.reset();
+        });
+
+        tabela.addEventListener('click', function (e) {
+            const btn = e.target;
+            const linha = btn.closest('tr');
+
+            if (btn.classList.contains('btn-excluir')) {
+                linha.remove();
+            }
+
+            if (btn.classList.contains('btn-editar')) {
+                const cells = linha.querySelectorAll('td');
+                document.getElementById('data').value = cells[0].textContent;
+                document.getElementById('materia').value = cells[1].textContent;
+                document.getElementById('arquivo').value = ""; // precisa reenviar o arquivo
+                editando = linha;
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
+        integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"
+        integrity="sha512-sH8JPhKJUeA9PWk3eOcOl8U+lfZTgtBXD41q6cO/slwxGHCxKcW45K4oPCUhHG7NMB4mbKEddVmPuTXtpbCbFA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>
