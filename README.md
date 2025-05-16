@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # 📚 Agenda Educacional
 
 Uma aplicação web simples feita em **HTML**, **CSS (Bootstrap)** e **JavaScript puro**, com o objetivo de simular uma agenda escolar onde é possível cadastrar matérias, datas e anexar arquivos (como imagens ou documentos). Todos os dados são manipulados diretamente no navegador — **não há necessidade de banco de dados**.
@@ -25,3 +26,5 @@ Uma aplicação web simples feita em **HTML**, **CSS (Bootstrap)** e **JavaScrip
 - A edição permite modificar os campos de uma linha.
 - A exclusão remove a linha da tabela.
 - **Os dados não são salvos ao recarregar a página**, pois não utilizamos banco de dados nem `localStorage`.
+=======
+>>>>>>> Stashed changes

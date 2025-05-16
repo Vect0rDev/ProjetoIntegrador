@@ -6,6 +6,7 @@
 :root {
     --cor-principal: #DDA15E;
     --cor-secundaria: #606C38;
+    --cor-terciaria: #FEFAE0;
 }
 
 body {
@@ -13,8 +14,13 @@ body {
     color: #FEFAE0;
 }
 
+.t-p {
+    color: var(--cor-secundaria)
+}
+
 .box {
-    padding: 50px;
+    width: 25rem;
+    padding: 35px;
     background: #FEFAE0;
     border-radius: 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -24,4 +30,57 @@ body {
     background-color: var(--cor-secundaria);
     color: white;
     border-radius: 12px;
+}
+
+.btn-custom {
+    background-color: var(--cor-secundaria);
+    color: white;
+    border-radius: 12px;
+}
+
+.btn-custom:hover {
+    background-color: #4d5a2f;
+}
+
+.btn-custom2 {
+    border: 1px solid var(--cor-principal);
+    color: var(--cor-secundaria);
+    border-radius: 12px;
+}
+
+.btn-custom2:hover {
+    color: white;
+    background-color: var(--cor-principal);
+}
+
+.form-control:focus {
+    border-color: var(--cor-secundaria);
+    box-shadow: 0 0 0 0.2rem rgba(96, 108, 56, 0.25);
+}
+
+h2 {
+    color: var(--cor-secundaria);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-text {
+    color: var(--cor-secundaria);
+}
+
+.logout-link {
+    color: #fff8ff;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+.materia-item {
+    background-color: #f4f1e3;
+    border-left: 5px solid var(--cor-secundaria);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
